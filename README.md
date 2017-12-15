@@ -1,1 +1,0 @@
-# iceye-assignment
