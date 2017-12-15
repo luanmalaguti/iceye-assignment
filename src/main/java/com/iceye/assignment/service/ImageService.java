@@ -18,7 +18,7 @@ public class ImageService {
 
     private static final String FONT_TYPE = "Arial";
     private static final int FONT_SIZE = 48;
-    public static final String IMAGE_TYPE = "jpg";
+    public static final String IMAGE_TYPE = "png";
 
     private static Map<RenderingHints.Key, Object> renderingProperties = new HashMap<>();
 
