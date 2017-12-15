@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class ImageService {
      * @param text
      * @return image byte array
      */
-    public byte[] convertTextToImage(String text){
+    public void convertTextToImage(String text){
         log.info("Converting text '" + text + "' to image");
 
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -53,7 +54,7 @@ public class ImageService {
         g2d.drawString(text, 0, g2d.getFontMetrics().getAscent());
         g2d.dispose();
 
-        return getByteArray(img);
+        writeByteArray(img, text);
     }
 
     /**
@@ -62,15 +63,15 @@ public class ImageService {
      * @param img {@link BufferedImage}
      * @return image byte array
      */
-    private byte[] getByteArray(BufferedImage img) {
+    private void writeByteArray(BufferedImage img, String name) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String filename = name.concat(".").concat(IMAGE_TYPE);
         try {
-            ImageIO.write( img, IMAGE_TYPE, baos);
+            ImageIO.write( img, IMAGE_TYPE, new FileOutputStream("/tmp/"+filename));
             baos.flush();
             baos.close();
         } catch (IOException e) {
             log.error("Error extracting byte array from BufferedImage: ", e);
         }
-        return baos.toByteArray();
     }
 }

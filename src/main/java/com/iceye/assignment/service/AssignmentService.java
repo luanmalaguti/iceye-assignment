@@ -28,8 +28,8 @@ public class AssignmentService {
         return jsonObjects;
     }
 
-    public byte[] ingest(String text){
-        return imageService.convertTextToImage(text);
+    public void ingest(String text){
+        imageService.convertTextToImage(text);
     }
 
     /**
