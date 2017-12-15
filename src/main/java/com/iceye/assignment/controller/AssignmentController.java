@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,12 +42,13 @@ public class AssignmentController {
 
 	@RequestMapping(value="/ingest/{text}", method=RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE )
 	@ResponseBody
-	public String ingest(@PathVariable String text, HttpServletResponse response) throws AssignmentException {
+	public String ingest(@PathVariable String text, HttpServletRequest request, HttpServletResponse response) throws AssignmentException {
 		try {
 			assignmentService.ingest(text);
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
-			return "<a href=\"http://localhost:8080/download/" + text + "\">Download image</a>";
+			String url = assignmentService.getBaseUrl(request);
+			return "<a href=\"" + url + "/download/" + text + "\">Download image</a>";
 		} catch (Exception e) {
 			log.error("Error: ",e);
 			throw new AssignmentException("An error occurred while processing your request: " + e.getMessage());

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class AssignmentService {
 
@@ -41,5 +43,9 @@ public class AssignmentService {
      */
     private String reverse(String str){
         return new StringBuilder(str).reverse().toString();
+    }
+
+    public String getBaseUrl(HttpServletRequest request){
+        return String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
     }
 }
