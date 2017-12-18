@@ -67,11 +67,15 @@ public class ImageService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String filename = name.concat(".").concat(IMAGE_TYPE);
         try {
-            ImageIO.write( img, IMAGE_TYPE, new FileOutputStream("/tmp/"+filename));
+            ImageIO.write( img, IMAGE_TYPE, new FileOutputStream(getTempDir() + filename));
             baos.flush();
             baos.close();
         } catch (IOException e) {
             log.error("Error extracting byte array from BufferedImage: ", e);
         }
+    }
+
+    public String getTempDir(){
+        return System.getProperty("java.io.tmpdir");
     }
 }
